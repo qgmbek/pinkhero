@@ -54,3 +54,34 @@ img {
 .restart-btn:active {
   transform: translateX(-50%) scale(0.97);
 }
+
+#controlsMenu {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px 18px;
+  border-radius: 10px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  z-index: 20;
+  user-select: none;
+  backdrop-filter: blur(4px);
+}
+
+#controlsMenu h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: rgb(255, 226, 59);
+}
+
+#controlsMenu ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+#controlsMenu li {
+  padding: 3px 0;
+}
