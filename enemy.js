@@ -6,7 +6,7 @@ export default class Enemy {
     this.height = 65;
     this.image = document.getElementById("enemyImage");
     this.x = this.gameWidth;
-    this.y = this.gameHeight - this.height;
+    this.y = this.gameHeight - this.height - 7;
     this.frameX = 0;
     this.speed = 4;
     this.markedForDeletion = false;

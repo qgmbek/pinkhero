@@ -6,6 +6,7 @@ import Enemy from "./enemy.js";
 window.addEventListener("load", function () {
   const loading = document.getElementById("loading");
   loading.style.display = "none";
+
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
@@ -29,6 +30,7 @@ window.addEventListener("load", function () {
       enemy.draw(ctx);
       enemy.update(() => score++);
     });
+
     enemies = enemies.filter((enemy) => !enemy.markedForDeletion);
   }
 
@@ -38,42 +40,37 @@ window.addEventListener("load", function () {
   function displayStatusText(context) {
     context.fillStyle = "yellow";
     context.font = "40px Helvetica";
-    context.fillText("Score: " + score, 20, 50);
+    context.fillText("Score: " + score, 40, 60);
 
     if (gameState.gameOver) {
       context.textAlign = "center";
-      context.fillStyle = "red";
+      context.fillStyle = "#ff4747";
       context.fillText("GAME OVER, try again!", canvas.width / 2, 200);
       document.getElementById("restartBtn").style.display = "block";
     }
   }
+
   const restartButton = document.getElementById("restartBtn");
 
-  restartButton.addEventListener('click', () => {
-    // Resize canvas again (fixes score going off-screen)
+  restartButton.addEventListener("click", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Reset game values
     enemies = [];
     enemyTimer = 0;
     score = 0;
     gameState.gameOver = false;
 
-    // Reset hero
     hero.x = canvas.width / 2 - hero.width / 2;
     hero.y = canvas.height - hero.height * 2;
     hero.vy = 0;
     hero.setState(0);
 
-    // Hide button
     restartButton.style.display = "none";
 
-    // Restart
     lastTime = 0;
     requestAnimationFrame(animate);
-});
-
+  });
 
   const input = new InputHandler();
   const background = new Background(canvas.width, canvas.height);
@@ -84,14 +81,19 @@ window.addEventListener("load", function () {
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;
     lastTime = timeStamp;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     background.draw(ctx);
     background.update();
-    hero.update(input.lastKey, enemies, gameState);
+
+    hero.update(input.lastKey, enemies, gameState, () => score++);
+
     hero.draw(ctx, deltaTime);
     handleEnemies(deltaTime);
     displayStatusText(ctx);
+
     if (!gameState.gameOver) requestAnimationFrame(animate);
   }
+
   animate(0);
 });
