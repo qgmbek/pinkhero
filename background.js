@@ -7,7 +7,7 @@ export default class Background {
     this.y = 0;
     this.width = this.gameWidth * 1.5;
     this.height = this.gameHeight;
-    this.speed = 2;
+    this.speed = 1.5;
     this.scrollEnabled = false;
   }
 

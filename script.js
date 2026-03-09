@@ -2,6 +2,7 @@ import Hero from "./hero.js";
 import InputHandler from "./input.js";
 import Background from "./background.js";
 import Enemy from "./enemy.js";
+import { soundManager } from "./sound.js";
 
 window.addEventListener("load", function () {
   const loading = document.getElementById("loading");
@@ -68,6 +69,10 @@ window.addEventListener("load", function () {
 
     restartButton.style.display = "none";
 
+    // restart run voice loop on new game
+    soundManager.stop("run");
+    soundManager.startLoop("run");
+
     lastTime = 0;
     requestAnimationFrame(animate);
   });
@@ -77,6 +82,9 @@ window.addEventListener("load", function () {
   const hero = new Hero(canvas.width, canvas.height, background);
 
   let lastTime = 0;
+
+  // start run voice loop for entire game session
+  soundManager.startLoop("run");
 
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;

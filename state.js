@@ -1,3 +1,5 @@
+import { soundManager } from "./sound.js";
+
 export const states = {
   STANDING: 0,
   IDLE: 1,
@@ -129,7 +131,10 @@ export class Jump extends State {
   }
   enter() {
     this.hero.frameY = 5;
-    if (this.hero.onGround()) this.hero.vy -= 20;
+    if (this.hero.onGround()) {
+      this.hero.vy -= 20;
+      soundManager.play("jump");
+    }
     this.hero.speed = this.hero.maxSpeed *= 0.5;
     this.hero.maxFrame = 7;
   }

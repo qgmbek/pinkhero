@@ -10,6 +10,7 @@ import {
   Hurt,
   Dead,
 } from "./state.js";
+import { soundManager } from "./sound.js";
 
 export default class Hero {
   constructor(gameWidth, gameHeight, background) {
@@ -91,10 +92,12 @@ export default class Hero {
 
         if (attacking) {
           enemy.markedForDeletion = true;
-
+          soundManager.play("kill");
           if (typeof scoreCallback === "function") scoreCallback();
         } else {
           gameState.gameOver = true;
+          soundManager.play("hurt");
+          soundManager.stop("run");
         }
       }
     });
