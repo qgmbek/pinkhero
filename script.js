@@ -68,8 +68,6 @@ window.addEventListener("load", function () {
     hero.setState(0);
 
     restartButton.style.display = "none";
-
-    // restart run voice loop on new game
     soundManager.stop("run");
     soundManager.startLoop("run");
 
@@ -83,8 +81,23 @@ window.addEventListener("load", function () {
 
   let lastTime = 0;
 
-  // start run voice loop for entire game session
-  soundManager.startLoop("run");
+  function enableAudioOnFirstInteraction() {
+    const startRunLoop = () => {
+      soundManager.startLoop("run");
+
+      window.removeEventListener("keydown", startRunLoop);
+      window.removeEventListener("pointerdown", startRunLoop);
+      window.removeEventListener("click", startRunLoop);
+      window.removeEventListener("touchstart", startRunLoop);
+    };
+
+    window.addEventListener("keydown", startRunLoop, { once: true });
+    window.addEventListener("pointerdown", startRunLoop, { once: true });
+    window.addEventListener("click", startRunLoop, { once: true });
+    window.addEventListener("touchstart", startRunLoop, { once: true });
+  }
+
+  enableAudioOnFirstInteraction();
 
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;
